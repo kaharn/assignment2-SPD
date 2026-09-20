@@ -1,4 +1,7 @@
 package main.java.abstractfactory;
 
-public class Checkbox {
+public interface Checkbox {
+
+    void render();
+
 }

@@ -1,4 +1,5 @@
 package main.java.abstractfactory;
 
-public class Button {
+public interface Button {
+    void render();
 }
