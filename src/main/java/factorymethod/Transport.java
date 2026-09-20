@@ -1,4 +1,5 @@
 package main.java.factorymethod;
 
-public class Transport {
+public interface Transport {
+    void deliver();
 }

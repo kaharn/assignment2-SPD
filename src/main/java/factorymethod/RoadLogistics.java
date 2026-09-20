@@ -1,4 +1,13 @@
 package main.java.factorymethod;
 
-public class RoadLogistics {
+public class RoadLogistics extends Logistics {
+
+    @Override
+
+    public Transport createTransport() {
+
+        return new Truck();
+
+    }
+
 }
