@@ -1,6 +1,6 @@
 # Assignment #2 — Factory Method & Abstract Factory
 
-**Course:** ShP-2216 — Software Design Patterns  
+**Course:** Software Design Patterns  
 **Institution:** Astana IT University — School of Computer Engineering  
 **Assignment:** #2 — Factory Method & Abstract Factory  
 **Option:** A — Logistics / Transport  
