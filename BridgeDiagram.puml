@@ -1,0 +1,47 @@
+@startuml
+interface Renderer {
+  +renderCircle(radius: double): void
+  +renderSquare(side: double): void
+}
+
+class VectorRenderer {
+  +renderCircle(radius: double): void
+  +renderSquare(side: double): void
+}
+
+class RasterRenderer {
+  +renderCircle(radius: double): void
+  +renderSquare(side: double): void
+}
+
+abstract class Shape {
+  #renderer: Renderer
+  +Shape(renderer: Renderer)
+  +setRenderer(renderer: Renderer): void
+  {abstract} +draw(): void
+}
+
+class Circle {
+  -radius: double
+  +Circle(renderer: Renderer, radius: double)
+  +draw(): void
+}
+
+class Square {
+  -side: double
+  +Square(renderer: Renderer, side: double)
+  +draw(): void
+}
+
+class Main {
+  +main(args: String[]): void
+}
+
+Renderer <|.. VectorRenderer
+Renderer <|.. RasterRenderer
+Shape <|-- Circle
+Shape <|-- Square
+Shape o-- Renderer : bridge
+Main ..> Shape : creates and draws
+Main ..> Renderer : selects
+@enduml

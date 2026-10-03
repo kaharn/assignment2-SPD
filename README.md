@@ -1,68 +1,74 @@
-# Assignment #2 — Factory Method & Abstract Factory
+# Assignment 3 — Bridge Pattern
 
-**Course:** Software Design Patterns  
-**Institution:** Astana IT University — School of Computer Engineering  
-**Assignment:** #2 — Factory Method & Abstract Factory  
-**Option:** A — Logistics / Transport  
-**Language:** Java  
-**JDK:** 17
+## Description
 
----
+This project demonstrates the Bridge structural pattern by separating the shape abstraction hierarchy from the renderer implementation hierarchy. `Shape` contains a `Renderer` reference through composition, so either hierarchy can vary independently.
 
-## Technology Stack
+Abstraction hierarchy:
 
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=java,idea,git,github" alt="Technology Stack">
-</p>
+```text
+Shape
+├── Circle
+└── Square
+```
 
-| Technology | Purpose |
+Implementation hierarchy:
+
+```text
+Renderer
+├── VectorRenderer
+└── RasterRenderer
+```
+
+## Bridge Pattern Roles
+
+| Bridge Role | Project Class |
 |---|---|
-| Java 17 | Main programming language |
-| IntelliJ IDEA | Development environment |
-| Git | Version control |
-| GitHub | Source code repository |
-| PlantUML | UML class diagrams |
+| Abstraction | `Shape` |
+| Refined Abstraction | `Circle`, `Square` |
+| Implementor | `Renderer` |
+| Concrete Implementor | `VectorRenderer`, `RasterRenderer` |
+| Client | `Main` |
 
----
+## Project Structure
 
-## 1. Project Overview
+```text
+src/main/java/bridge/
+├── Renderer.java
+├── VectorRenderer.java
+├── RasterRenderer.java
+├── Shape.java
+├── Circle.java
+├── Square.java
+└── Main.java
+BridgeDiagram.puml
+```
 
-This project demonstrates two creational design patterns:
+## How to Run
 
-- **Factory Method**
-- **Abstract Factory**
+From the project root, using JDK 17:
 
-The project uses the **Logistics / Transport** domain for the Factory Method and a cross-platform **GUI toolkit** for the Abstract Factory.
+```bash
+mkdir -p out
+javac --release 17 -d out src/main/java/bridge/*.java
+java -cp out main.java.bridge.Main
+```
 
-The main goal is to demonstrate how object creation can be separated from client code using polymorphism and factory abstractions.
+## Example Output
 
----
+```text
+Drawing circle as vectors with radius: 5.0
+Drawing circle as pixels with radius: 5.0
+Drawing square as vectors with side: 4.0
+Drawing square as pixels with side: 4.0
+```
 
-# 2. Part A — Factory Method
+`Main` also switches the same circle from vector to raster rendering at runtime.
 
-The Factory Method pattern is used to create different types of transport.
+## Clean Code
 
-The system supports:
-
-- `Truck`
-- `Ship`
-
-The client does not directly decide which concrete transport object should be created. Instead, concrete creator classes provide the appropriate implementation.
-
-### Pattern Structure
-
-| Pattern Role | Implementation |
-|---|---|
-| Product | `Transport` |
-| Concrete Product | `Truck` |
-| Concrete Product | `Ship` |
-| Creator | `Logistics` |
-| Concrete Creator | `RoadLogistics` |
-| Concrete Creator | `SeaLogistics` |
-
-### Factory Method
-
-The `Logistics` class declares the factory method:
-
-```java
-public abstract Transport createTransport();
+- **Meaningful Names:** classes, fields, and methods describe their purpose.
+- **Single Responsibility:** shapes store shape data; renderers perform rendering.
+- **Separation of Concerns:** shape classes contain no vector or raster logic.
+- **DRY:** `Shape` holds the shared renderer reference and switching method.
+- **Open/Closed Principle:** new shapes or renderers can be added through the existing abstractions.
