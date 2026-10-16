@@ -1,0 +1,78 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam class {
+  BackgroundColor #F8FAFC
+  BorderColor #334155
+  ArrowColor #475569
+}
+
+package hometheater {
+  class Main {
+    +main(args: String[]): void
+  }
+
+  class HomeTheaterFacade {
+    -amplifier: Amplifier
+    -player: StreamingPlayer
+    -projector: Projector
+    -lights: TheaterLights
+    -screen: Screen
+    -popper: PopcornPopper
+    -tuner: Tuner
+    +watchMovie(title: String): void
+    +endMovie(): void
+    +listenToRadio(frequency: double): void
+    +endRadio(): void
+  }
+}
+
+package "hometheater.devices" {
+  class Amplifier {
+    +on(): void
+    +off(): void
+    +setStreamingPlayer(player: StreamingPlayer): void
+    +setTuner(tuner: Tuner): void
+    +setSurroundSound(): void
+    +setStereoSound(): void
+    +setVolume(level: int): void
+  }
+  class StreamingPlayer {
+    +on(): void
+    +off(): void
+    +play(title: String): void
+  }
+  class Projector {
+    +on(): void
+    +off(): void
+    +setWideScreenMode(): void
+  }
+  class TheaterLights {
+    +dim(level: int): void
+    +on(): void
+  }
+  class Screen {
+    +down(): void
+    +up(): void
+  }
+  class PopcornPopper {
+    +on(): void
+    +pop(): void
+    +off(): void
+  }
+  class Tuner {
+    +on(): void
+    +off(): void
+    +setFrequency(frequency: double): void
+  }
+}
+
+Main ..> HomeTheaterFacade : uses
+HomeTheaterFacade -- Amplifier : coordinates
+HomeTheaterFacade -- StreamingPlayer : coordinates
+HomeTheaterFacade -- Projector : coordinates
+HomeTheaterFacade -- TheaterLights : coordinates
+HomeTheaterFacade -- Screen : coordinates
+HomeTheaterFacade -- PopcornPopper : coordinates
+HomeTheaterFacade -- Tuner : coordinates
+@enduml
