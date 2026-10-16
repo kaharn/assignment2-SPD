@@ -1,74 +1,60 @@
-# Assignment 3 — Bridge Pattern
+# Assignment 4 — Facade Pattern
 
-## Description
+This Java 17 project demonstrates the Facade Pattern with a home theater. `HomeTheaterFacade` offers a small set of high-level movie and radio operations while coordinating the separate theater devices.
 
-This project demonstrates the Bridge structural pattern by separating the shape abstraction hierarchy from the renderer implementation hierarchy. `Shape` contains a `Renderer` reference through composition, so either hierarchy can vary independently.
+## Facade Pattern Roles
 
-Abstraction hierarchy:
-
-```text
-Shape
-├── Circle
-└── Square
-```
-
-Implementation hierarchy:
-
-```text
-Renderer
-├── VectorRenderer
-└── RasterRenderer
-```
-
-## Bridge Pattern Roles
-
-| Bridge Role | Project Class |
+| Role | Project class |
 |---|---|
-| Abstraction | `Shape` |
-| Refined Abstraction | `Circle`, `Square` |
-| Implementor | `Renderer` |
-| Concrete Implementor | `VectorRenderer`, `RasterRenderer` |
+| Facade | `HomeTheaterFacade` |
+| Subsystem classes | `Amplifier`, `StreamingPlayer`, `Projector`, `TheaterLights`, `Screen`, `PopcornPopper`, `Tuner` |
 | Client | `Main` |
+
+The client can call `watchMovie(title)` and `endMovie()` without managing device startup and shutdown order. It can also call `listenToRadio(frequency)` and `endRadio()` to run the tuner and amplifier together.
 
 ## Project Structure
 
 ```text
-src/main/java/bridge/
-├── Renderer.java
-├── VectorRenderer.java
-├── RasterRenderer.java
-├── Shape.java
-├── Circle.java
-├── Square.java
-└── Main.java
-BridgeDiagram.puml
+src/
+├── main/java/hometheater/
+│   ├── HomeTheaterFacade.java
+│   ├── Main.java
+│   └── devices/
+└── test/java/hometheater/
+    └── HomeTheaterFacadeTest.java
+UML.puml
+UML.png
+Assignment4_Report.md
 ```
 
-## How to Run
+## Build and Run
 
-From the project root, using JDK 17:
+Requires JDK 17 or newer. Compile and run the demonstration:
 
 ```bash
 mkdir -p out
-javac --release 17 -d out src/main/java/bridge/*.java
-java -cp out main.java.bridge.Main
+javac --release 17 -d out $(find src/main/java -name '*.java')
+java -cp out hometheater.Main
 ```
 
-## Example Output
+Run the automated tests:
 
-```text
-Drawing circle as vectors with radius: 5.0
-Drawing circle as pixels with radius: 5.0
-Drawing square as vectors with side: 4.0
-Drawing square as pixels with side: 4.0
+```bash
+./test.sh
 ```
 
-`Main` also switches the same circle from vector to raster rendering at runtime.
+The test runner compiles production and test sources with `--release 17` and runs the tests without third-party dependencies.
 
-## Clean Code
+## Clean Code Principles
 
-- **Meaningful Names:** classes, fields, and methods describe their purpose.
-- **Single Responsibility:** shapes store shape data; renderers perform rendering.
-- **Separation of Concerns:** shape classes contain no vector or raster logic.
-- **DRY:** `Shape` holds the shared renderer reference and switching method.
-- **Open/Closed Principle:** new shapes or renderers can be added through the existing abstractions.
+- **Meaningful names:** device and facade methods describe their theater actions.
+- **Single responsibility:** each device represents and logs its own operations; the facade coordinates workflows.
+- **Encapsulation:** subsystem references are private and callers use the facade's movie and radio operations.
+- **Dependency injection:** the facade receives its devices through its constructor, and devices receive an output consumer.
+- **DRY:** shared output handling is implemented in `TheaterDevice` instead of repeated in every device.
+- **Input validation:** movie titles and radio frequencies are checked before the devices are operated.
+- **Separation of concerns:** the demonstration, orchestration, subsystem actions, and automated tests are kept in separate classes.
+
+## UML
+
+`UML.puml` contains the editable PlantUML class diagram. `UML.png` is its rendered class diagram.
