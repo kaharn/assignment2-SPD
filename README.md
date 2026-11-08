@@ -1,60 +1,47 @@
-# Assignment 4 — Facade Pattern
+# Assignment 6: Visitor Pattern
 
-This Java 17 project demonstrates the Facade Pattern with a home theater. `HomeTheaterFacade` offers a small set of high-level movie and radio operations while coordinating the separate theater devices.
+This Java 17 project models a small file system using `File` and `Directory` elements. It demonstrates the Visitor pattern with two operations: calculating the size of all files in a tree and finding files by extension.
 
-## Facade Pattern Roles
-
-| Role | Project class |
-|---|---|
-| Facade | `HomeTheaterFacade` |
-| Subsystem classes | `Amplifier`, `StreamingPlayer`, `Projector`, `TheaterLights`, `Screen`, `PopcornPopper`, `Tuner` |
-| Client | `Main` |
-
-The client can call `watchMovie(title)` and `endMovie()` without managing device startup and shutdown order. It can also call `listenToRadio(frequency)` and `endRadio()` to run the tuner and amplifier together.
-
-## Project Structure
+## Project structure
 
 ```text
-src/
-├── main/java/hometheater/
-│   ├── HomeTheaterFacade.java
-│   ├── Main.java
-│   └── devices/
-└── test/java/hometheater/
-    └── HomeTheaterFacadeTest.java
+src/main/java/filesystem/
+├── Element.java
+├── File.java
+├── Directory.java
+├── Visitor.java
+├── SizeCalculatorVisitor.java
+├── SearchVisitor.java
+└── Main.java
+README.md
+Assignment6_Report.md
 UML.puml
 UML.png
-Assignment4_Report.md
+run.sh
 ```
 
-## Build and Run
+## Compile and run
 
-Requires JDK 17 or newer. Compile and run the demonstration:
+Install JDK 17 or newer. From the repository root, run:
 
-```bash
+```sh
+./run.sh
+```
+
+The script compiles the sources with the Java 17 language and API target into a temporary directory, runs the demo, and removes the temporary build output. The equivalent manual commands are:
+
+```sh
 mkdir -p out
 javac --release 17 -d out $(find src/main/java -name '*.java')
-java -cp out hometheater.Main
+java -cp out filesystem.Main
 ```
 
-Run the automated tests:
+## Example output
 
-```bash
-./test.sh
+```text
+Total size of 'project': 10256 bytes
+Files matching .txt:
+- notes.txt (512 bytes)
 ```
 
-The test runner compiles production and test sources with `--release 17` and runs the tests without third-party dependencies.
-
-## Clean Code Principles
-
-- **Meaningful names:** device and facade methods describe their theater actions.
-- **Single responsibility:** each device represents and logs its own operations; the facade coordinates workflows.
-- **Encapsulation:** subsystem references are private and callers use the facade's movie and radio operations.
-- **Dependency injection:** the facade receives its devices through its constructor, and devices receive an output consumer.
-- **DRY:** shared output handling is implemented in `TheaterDevice` instead of repeated in every device.
-- **Input validation:** movie titles and radio frequencies are checked before the devices are operated.
-- **Separation of concerns:** the demonstration, orchestration, subsystem actions, and automated tests are kept in separate classes.
-
-## UML
-
-`UML.puml` contains the editable PlantUML class diagram. `UML.png` is its rendered class diagram.
+`UML.puml` is the editable class diagram source; `UML.png` is its rendered image. The report explains the design and its Clean Code choices.
