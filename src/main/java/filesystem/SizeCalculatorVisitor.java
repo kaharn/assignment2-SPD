@@ -3,7 +3,8 @@ package filesystem;
 import java.util.Objects;
 
 /** Calculates the combined size of all files below a selected element. */
-public final class SizeCalculatorVisitor implements Visitor {
+public final class
+SizeCalculatorVisitor implements Visitor {
     private long totalSizeInBytes;
 
     public long calculate(Element element) {
